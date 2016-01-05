@@ -170,8 +170,46 @@ body {
     line-height: (0.125 * $heightValue) + rem;
 }
 
-/* usage
+/* usage 
 body {
   @include line-height (16);
 }
 */
+
+// Form pseudo elements
+$pseudo-phprefix: "::-webkit-input-placeholder" "::-moz-placeholder" ":-ms-input-placeholder" "::placeholder";
+
+$ph-styles: (
+  font-family: $type-body,
+  font-size: medium,
+  font-style: normal,
+  font-weight: normal,
+  color: inherit,
+  letter-spacing : normal,
+  line-height: normal,
+  text-align: inherit,
+  text-decoration: inherit,
+  padding: 0
+);
+
+@mixin placeholder-theme($styles) {
+  @each $pseudo in $pseudo-phprefix {
+
+    @at-root #{&}#{$pseudo} {
+      @each $key, $value in $styles {
+        #{$key}: #{$value};
+      }
+    }
+
+  }
+}
+
+@mixin placeholder {
+  @each $pseudo in $pseudo-phprefix {
+
+    @at-root #{&}#{$pseudo} {
+      @content
+    }
+
+  }
+}
